@@ -12,7 +12,7 @@
 
 // Define EEPROM Layout
 // Arduino Mega 4k=2000ints - DS1307=50 bytes of general p storage
-#define cacheFirstNoOfBytes 10 // tells function how large the settings block on the EEPROM is
+#define cacheFirstNoOfBytes 12 //rbw 10 // tells function how large the settings block on the EEPROM is
                                // so it can be cached to RAM
 #define EEPos_Verscheck 1 // byte
 #define EEPos_Verscheck_expected_data 101 // the EEPROM layout check value
@@ -75,3 +75,6 @@ class EEPROMHandler_c
 };
 
 #endif
+
+
+

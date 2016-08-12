@@ -9,7 +9,8 @@
 #include "Wire.h"
 #include "types.h"
 
-#define DS1307_ADDRESS 0x68
+//rbw orig= #define DS1307_ADDRESS 0x68
+#define DS1307_ADDRESS 0x68//rbw
 
 class DS1307_RTC_c
 {
@@ -42,3 +43,6 @@ class DS1307_RTC_c
 };
 
 #endif
+
+
+

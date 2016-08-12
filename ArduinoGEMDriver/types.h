@@ -61,3 +61,6 @@ class c_fullAngle // longtide and RA values 360deg or 24hr
 		byte arcSeconds;
 };
 #endif
+
+
+

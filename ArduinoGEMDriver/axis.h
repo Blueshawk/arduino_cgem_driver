@@ -13,7 +13,8 @@
 #include "encoders.h"
 // library for the adafruit motor sheild
 // http://www.ladyada.net/make/mshield/
-#include <AFMotor.h>
+//rbw #include <AFMotor.h>
+#include "PID_v1.h"
 
 #define _HISTORY_BYTES 24
 #define _HISTORY_BYTES_HALF 12
@@ -28,6 +29,12 @@
 #define _ERROR_BIG_EAST 4
 #define _ERROR_BIG_SOUTH 4
 
+extern byte speedSetpoint;
+extern double pidSetpoint, pidInput, pidOutput, kp,ki,kd;
+extern PID mypid(double, double, double,        // * constructor.  links the PID to the Input, Output, and 
+        double, double, double, int);     
+
+
 class axis_c
 {
 	// Polling
@@ -40,8 +47,8 @@ class axis_c
 	// ---------------
 	protected:
 		// the motor that controls the axis
-		byte motorport;
-		AF_DCMotor* motor;
+		//rbw byte motorport;
+		//rbw AF_DCMotor* motor;
 		// a pointer to the function that provides encoder movement feedback
 		int8_t* readEncoderMovement();
 		// a pointer to the EEPROM Handler Object that handles settings for the motor
@@ -66,6 +73,9 @@ class axis_c
 	// Position
 	// --------
 	public:
+
+
+		
 		// absolute position for the gear in  encoder pulses
 		volatile signed long gearPosition_raw; 
 		// the target gear position
@@ -153,15 +163,14 @@ class ra_axis_c : public axis_c
 		void runMotorEast();
 		void runMotorEast(byte newSpeed) {
 			setMotorSpeed(newSpeed);
-			runMotorEast();
-		}
+			runMotorEast(); 
+			} 
 		void runMotorWest();
 		void runMotorWest(byte newSpeed) {
 			setMotorSpeed(newSpeed);
 			runMotorWest();
-		}
+		} 
 		void stopMotor();
-	
 	// Tracking
 	// --------
 	public:

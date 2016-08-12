@@ -17,7 +17,7 @@
 #include <LiquidCrystal_I2C.h>
 
 // I2C LCD Display Library Setup
-#define I2C_ADDR    0x3F  // Define I2C Address where the PCF8574A is
+#define I2C_ADDR    0x27  // Define I2C Address where the PCF8574A is
 #define BACKLIGHT_PIN     3
 #define En_pin  2
 #define Rw_pin  1
@@ -39,7 +39,7 @@ class UI_c
 		camera_c* camera;
 		joystick_c* joystick;
 		mount_c* mount;
-		AF_DCMotor* focuser_motor;
+		//rbw AF_DCMotor* focuser_motor;
 		DS1307_RTC_c* DS1307_RTC;
 		EEPROMHandler_c* EEPROMHandler;
 		// helper functions
@@ -58,3 +58,6 @@ class UI_c
 };
 
 #endif
+
+
+
