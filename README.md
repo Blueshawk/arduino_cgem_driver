@@ -1,6 +1,9 @@
 
 			GEM Telescope Mount Control with an Arduino Mega -- Direct output version
 
+GEM Telescope Mount Control with an Arduino Mega -- Direct output version
+
+
 By: Ray Wells, forked from Mathew Watts' fine work.
 ------------------------------------------------
 
