@@ -1,11 +1,8 @@
 
-			GEM Telescope Mount Control with an Arduino Mega -- Direct output version
-
 GEM Telescope Mount Control with an Arduino Mega -- Direct output version
-
+------------------------------------------------
 
 By: Ray Wells, forked from Mathew Watts' fine work.
-------------------------------------------------
 
  Following up on the Work of Matthew Watts "https://github.com/mwvent/arduino_telescope_mount" I started making changes to better suit the hardware I selected. My design is mounted on a Celestron Omni CG-4 nonmotorized equatorial mount with tight accurate tracking for unguided Astrophotography being the primary focus. 
 
