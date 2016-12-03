@@ -110,11 +110,10 @@ byte UI_c::mainMenu(bool UIUpdateFlag) {
 		
 		lcd->setCursor(0, 0); // row 1,left
     lcd->print(DS1307_RTC->TimeString());
-		progmemLCDPrint(PSTR("        "));
-    
-		lcd->setCursor(0, 1); // row 2,left
-		lcd->print(menuItem);
-    progmemLCDPrint(PSTR(") "));
+		progmemLCDPrint(PSTR("             "));
+    lcd->setCursor(3, 1); // row 2,left
+		//lcd->print(menuItem);
+    //lcd->print("> ");
     	
     		switch(menuItem) {
 			
@@ -135,9 +134,10 @@ byte UI_c::mainMenu(bool UIUpdateFlag) {
     lcd->setCursor(0, 2); //row 3,left
     lcd->print("Spt "); 
     lcd->print((byte)speedSetpoint);
-    lcd->print(" err ");
+    lcd->print(" ");
+    lcd->print(" Err ");
     lcd->print(mount -> ra_axis -> gearPositionError());
-    //progmemLCDPrint(PSTR("        "));
+    lcd->print("        ");
     lcd->setCursor(0,3); //row 4 left
     lcd->print("PID On:");
     lcd->print(myPID.GetMode());
@@ -302,7 +302,8 @@ bool UI_c::menuItem_Settings(bool UIUpdateFlag) {
           lcd->print(" I=");
           lcd->print(int(ki));
           lcd->print(" D=");
-          lcd->print(int(kd));  			
+          lcd->print(int(kd));
+          lcd->print("     ");  			
 				break;
 			case 2 :
 				progmemLCDPrint(PSTR("Derivative  "));
@@ -315,6 +316,8 @@ bool UI_c::menuItem_Settings(bool UIUpdateFlag) {
           lcd->print(int(ki));
           lcd->print(" D=");
           lcd->print(int(kd));  				
+		      lcd->print("     ");          
+        		
 				break;
 			case 3 :
 				progmemLCDPrint(PSTR("RA fine tune   "));

@@ -107,8 +107,7 @@ void mount_c::sync(position syncPos) {
 void mount_c::gotoPos(position gotoPos) {
 	// check if crossing the meridian is needed?
 	// check if target DEC pos is west side or east side
-        
-	 if((double)gotoPos.RAPos.arcHours >= (double)12.0) { 
+    if((double)gotoPos.RAPos.arcHours >= (double)12.0) { 
 		gotoPos.DECPos.decWestSide = true;
 		gotoPos.DECPos.decEastSide = false;
 	} else {
@@ -118,12 +117,12 @@ void mount_c::gotoPos(position gotoPos) {
 	// check if mount is currentley inverse to the east or west of the target
 	if(gotoPos.DECPos.decWestSide != dec_axis -> currentAngle() -> decWestSide) {
 		// if it is flip the target RA by 12 hours -  this will not change the 'actual' target
-		// but compensates for the 'flip' that will happen when dec slews over the line --you mean RA? rbw 2-14-16
+		// but compensates for the 'flip' that will happen when dec slews over RA meridian line. 
 		gotoPos.RAPos.arcHours += 12;
 		if(gotoPos.RAPos.arcHours > 24) {
 			gotoPos.RAPos.arcHours -= 24;
-		}
-	}
+		} 
+}
 	ra_axis -> setTarget(gotoPos.RAPos);
 	dec_axis -> setTarget(gotoPos.DECPos);
 }
@@ -145,12 +144,12 @@ void mount_c::moveTarget(int RAOffset, int DECOffset)
 	// get positive values for x and y if they are negative
 	int xPositive;
 	int yPositive;
-	if(x<-10) {
+	if(x<0) {
 		xPositive = 0 - x;
 	} else {
 		xPositive = x;
 	}
-	if(y<-10) {
+	if(y<0) {
 		yPositive = 0 - y;
 	} else {
 		yPositive = y;
@@ -159,12 +158,9 @@ void mount_c::moveTarget(int RAOffset, int DECOffset)
 	// we only want to move one axis at a time with the joystick, it
 	// is rather hard to control otherwise
 	// so flag to check if x axis is dominant or larger value
-	bool xDominant=xPositive > yPositive;
-	// set multiplier
-	if(fast) {
-		muliplier=2.33; //orig 6 rbw
-	}
 	
+	bool xDominant=xPositive > yPositive;
+ 	
 	// if both axis 0 (joystick center)
 	static bool lastTimeWasZeros = false;
 	if(x==0 && y==0) {
@@ -192,7 +188,7 @@ void mount_c::moveTarget(int RAOffset, int DECOffset)
 			slewSpeed = (byte)xPositive ;
 		}
 		// pass to axis
-		if(x > 0) { 
+		if(x > 20) { 
   			ra_axis->slewWest(slewSpeed);
 		} else {
 			ra_axis->slewEast(slewSpeed);
@@ -202,7 +198,7 @@ void mount_c::moveTarget(int RAOffset, int DECOffset)
 		ra_axis->stopSlew();
 	}
 	// y value is dominant
-	if(y!=0 && (!xDominant)) {
+if(y!=0 && (!xDominant)) {
 		// calc speed
 		byte slewSpeed;
 		if(fast) {
@@ -211,7 +207,7 @@ void mount_c::moveTarget(int RAOffset, int DECOffset)
 			slewSpeed = (byte)yPositive;
 		}
 		// pass to axis
-		if(y > 0) {
+		if(y > 20) {
 			dec_axis->slewNorth(slewSpeed);
 		} else {
 			dec_axis->slewSouth(slewSpeed);

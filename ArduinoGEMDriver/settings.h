@@ -16,10 +16,10 @@
 // Defaults for user adjustable constants
 // -------------------------------------------------------------
 // eeprom variables repurposed from old version for PId loop in tracking speed.
-#define _default_RASlowSpeed 5 //RA Derivitive 
-#define _default_DECSlowSpeed 65 //RA endcoder geartooth adjustment
-#define _default_RAErrorTolerance 52 //RA P gain
-#define _default_DECErrorTolerance 6 //RA integral
+#define _default_RASlowSpeed 10 //RA Derivitive 
+#define _default_DECSlowSpeed 137 //RA endcoder geartooth adjustment
+#define _default_RAErrorTolerance 45 //RA P gain
+#define _default_DECErrorTolerance 10 //RA integral
 #define _default_Brightnessvalue 128///LCD backlight value -not implimented yet
 // --------------------------------------------------------------------------------------------
 // USE The DS1307 for Settings storage, more flexible then EEPROM as can be written frequently
@@ -59,5 +59,4 @@
 #define FMIN2 7 //focus feedback - not used
 #define FMEN 12 //focus speed - not used
 //define mega2560 to use serial1 for bluetooth??
-#define __AVR_ATmega2560__
 

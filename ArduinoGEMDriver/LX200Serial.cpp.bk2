@@ -10,11 +10,11 @@ LX200SerialHandler_c::LX200SerialHandler_c(mount_c* mountobj,  DS1307_RTC_c* DS1
 	highPrecision=true;
 	twentyFour_hourmode=true;
 	longFormat=true;
-	#ifdef __AVR_ATmega2560__
-		Serial1.begin(9600);
-	#endif
-	Serial.begin(9600);
-}
+ #ifdef __AVR_ATmega2560__
+ 	Serial1.begin(9600);
+	//Serial.println("bluetooth engaged");
+  #endif
+	}
 
 // -------------------------------------------------------------
 // Serial Handling Wrappers / Helpers
@@ -41,12 +41,14 @@ void LX200SerialHandler_c::printIntLeadingZero(int value) {
 void LX200SerialHandler_c::printIntLeadingZeroAndPolarity(int value) {
 	if(value<0) {
 		progmemPrint(PSTR("-"));    // print polarity
+               // value = (abs(value)); //rbw less code than below but maybe didn't work 12-14-15
 	} else {
-		progmemPrint(PSTR("+")); //rbw orig = " "  "+" inserted for stellarium
+		progmemPrint(PSTR("+")); //rbw added + for Stellarium 
+                
 	}
-	if(value<0) {
+	 if(value<0) {
 		value = 0 - value;    // make positive
-	}
+	     }
 	printIntLeadingZero(value);
 }
 
@@ -84,7 +86,7 @@ int LX200SerialHandler_c::findCharacter(char* chars, int startPos, char charToFi
 void LX200SerialHandler_c::progmemPrint (PGM_P s) {
 	char c;
 	while ((c = pgm_read_byte(s++)) != 0) {
-		//Serial.print(c);
+		Serial.print(c);
 		Serial1.print(c);
 	}
 }
@@ -92,17 +94,17 @@ void LX200SerialHandler_c::progmemPrint (PGM_P s) {
 void LX200SerialHandler_c::progmemPrintln (PGM_P s) {
 	char c;
 	while ((c = pgm_read_byte(s++)) != 0) {
-		//Serial.print(c);
+		Serial.print(c);
 		Serial1.print(c);
 	}
 	Serial1.println("");
-	//Serial.println("");
+	Serial.println("");
 }
 
 // -------------------------------------------------------------
 // Print LX200 Format Co-ordinates
 // -------------------------------------------------------------
-void LX200SerialHandler_c::printLX200positionRA(Angle* pos) {
+void LX200SerialHandler_c::printLX200positionRA(Angle* pos) { 
 	// HH:
 	printIntLeadingZero(pos -> arcHours);
 	SerialSend(":");
@@ -123,7 +125,7 @@ void LX200SerialHandler_c::printLX200positionRA(Angle* pos) {
 	SerialSend("#");
 }
 
-void LX200SerialHandler_c::printLX200positionDEC(Angle* pos) {
+void LX200SerialHandler_c::printLX200positionDEC(Angle* pos) {   
 	// sdd  - the s is polarity (+ or -)
 	printIntLeadingZeroAndPolarity(pos -> degrees);
 	// ASCII 223 is the LX200's degree symbol and must be sent as a byte not a char
@@ -131,7 +133,7 @@ void LX200SerialHandler_c::printLX200positionDEC(Angle* pos) {
 	// MM
 	printIntLeadingZero(pos -> arcMinutes);
 	if(longFormat) { // 'SS if long format
-		progmemPrint(PSTR(":"));//rbw - for stellarium
+		progmemPrint(PSTR(":")); //rbw changed for Stellarium orig was "'"
 		printIntLeadingZero(pos -> arcSeconds);
 	}
 	progmemPrint(PSTR("#"));
@@ -536,28 +538,24 @@ void LX200SerialHandler_c::serialCommand() {
 		
 		// Movement stop (Q) commands
 		case 'Q' :
-			/* No need in current implemtation to check second char - all paths lead to same end
 			switch(serialBuffer[2]) {
 				case 'n' : // Qn_StopMoveNorth
-					mount -> stopSlew();
+					mount -> dec_axis -> stopSlew();
 					break;
 				case 's' : // Qs_StopMoveSouth
-					mount -> stopSlew();
+					mount -> dec_axis -> stopSlew();
 					break;
 				case 'e' : // Qe_StopMoveEast
-					mount -> stopSlew();
+					mount -> ra_axis -> stopSlew();
 					break;
 				case 'w' : // Qw_StopMoveWest
-					mount -> stopSlew();
+					mount -> ra_axis -> stopSlew();
 					break;
 				case 0 : // Q_stopslew
 					mount -> stopSlew();
 					break;
 			}
-			*/
-			mount -> stopSlew();
 			break;
-		
 		// Rate set (R) commands
 		case 'R' :
 			switch(serialBuffer[2]) {
@@ -644,3 +642,6 @@ void LX200SerialHandler_c::serialCommand() {
 			break;
 	}
 }
+
+
+

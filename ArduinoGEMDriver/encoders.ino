@@ -91,7 +91,7 @@ void encoders_c::interrupt() {
 							  0	// 11 11 - no change
 							 }; 
 
-#else;
+#else
 
           static int  dec_enc_states[] = {                0,	// 00 00 - no change
 							-1,	// 00 01 - B rising A low

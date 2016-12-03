@@ -1,0 +1,36 @@
+//pid setup moved to top of update ^^
+      pidSetpoint = 0;
+        pidInput = (.01*(gearPosErr));
+          myPID.SetControllerDirection(DIRECT); 
+          myPID.Compute();
+        speedSetpoint = ((byte)pidOutput);
+       runMotorEast (abs((byte)speedSetpoint+(byte)minimumMotorSpeed)); //1 rbw 
+
+bleah....this will be direction select when finished.
+
+      if ((byte)speedSetpoint) < 0 
+        {
+        runMotorWest(1);
+        }      
+      if ((byte)speedSetpoint) > 0 
+        {
+       runMotorEast(abs((byte)speedSetpoint));
+
+
+---------in axis.h definition had:
+void runMotorWest();
+		void runMotorWest(byte newSpeed) {
+			setMotorSpeed(newSpeed);
+			runMotorWest(); 
+		} 
+setMotorSpeed(newSpeed);
+
+
+and then  in motorsetspeed routing tests for byte overflow and prevents it.
+
+
+
+
+get rid of pwn analog output and drive the motor directly with digital pulses., 
+pulses hit the motor with full arm voltage for the instant the error is sensed overcoming the motor
+minimum speed issue. 

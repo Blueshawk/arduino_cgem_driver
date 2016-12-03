@@ -39,8 +39,8 @@ PID myPID(&pidInput, &pidOutput, &pidSetpoint,kp,ki,kd, DIRECT); //set up pid li
 void setup() {
   delay(2000);//in case something goes horribly wrong, this will let you download a new program.
 
-  myPID.SetSampleTime(50); 
-  myPID.SetOutputLimits (-255,255);
+  myPID.SetSampleTime(5); 
+  myPID.SetOutputLimits ( 0,255);
   myPID.SetMode(AUTOMATIC);
  
 //set pwm frequency for the outputs

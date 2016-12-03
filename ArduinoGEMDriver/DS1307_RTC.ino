@@ -105,7 +105,7 @@ void DS1307_RTC_c::blockRead(byte startpos, byte amountToRead, byte target[]) {
 	if(startpos > 50) {
 		return;
 	}
-	if(startpos+amountToRead > 50) //rbw orig 50
+	if(startpos+amountToRead > 50)
 {
 		return;
 	}
